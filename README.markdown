@@ -4,7 +4,7 @@ Panda client, PHP
 This simple PHP library provides a low-level interface to the REST API of [**Panda**](http://pandastream.com), the online video encoding service.
 
 
-Usage
+Setup
 -----
 
 This library requires **PHP 5.1.2** or later
@@ -18,8 +18,44 @@ Copy the `panda.php` file to your application and `require()` it. The `Panda` cl
       'secret_key' => 'your-secret-key',
     ));
 
-Now you can use this instance to interact with your Panda cloud. For example:
+Now you can use this instance to interact with your Panda cloud.
 
-    $panda->get('videos.json')  // Retrieves a JSON listing of all your videos
-    $panda->post('videos.json', array('source_url' => 'http://example.com/my-video.avi')) // Upload and encode given video
-    $panda->delete('videos/12345678-90ab-cdef-1234-567890abcdef.json') // Delete a video
+
+Examples
+--------
+
+Retrieve a list of all your videos:
+
+    $panda->get('/videos.json')
+
+Before being able to encode videos, you need to define **encoding profiles**. You can retrieve a list of profiles you have defined for your account:
+
+    $panda->get('/profiles.json')
+
+Initially though, this list will be empty. Solve this by creating a new profile:
+
+    $panda->post('/profiles.json', array(
+        'title' => 'My custom profile',
+        'category' => 'desktop',
+        'extname' => 'mp4',
+        'width' => 320,
+        'height' => '240',
+        'command' => 'ffmpeg -i $input_file$ -f mp4 -b 128k $resolution_and_padding$ -y $output_file',
+    ));
+
+From now on, any video that you upload will be encoded in all available profiles by default. Let's upload a video now:
+
+    $panda->post('/videos.json', array(
+        'source_url' => 'http://example.com/path/to/video.mp4',
+    ));
+
+It will take some time to encode, depending on the size of the video and other parameters. While you wait, you can check the status of each encoding (one per profile):
+
+    $panda->get('/videos/VIDEO_ID/encodings.json');
+
+Eventually, the process will end and each profile will have a URL where you can retrieve the result from.
+
+Finally, you may want to clean up after your tests:
+
+    $panda->delete('/videos/VIDEO_ID.json');
+    $panda->delete('/profiles/PROFILE_ID.json');
