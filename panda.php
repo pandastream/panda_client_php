@@ -35,8 +35,12 @@ class Panda {
     public function delete($request_path, $params = array()) {
         return $this->http_request('DELETE', $request_path, $params);
     }
-    
+
     public function api_url() {
+        return 'http://' . $this->api_host_and_port();
+    }
+    
+    public function api_host_and_port() {
         return $this->api_host . "/v{$this->api_version}";
     }
 
@@ -54,7 +58,7 @@ class Panda {
 			$suffix = '?' . $signed_query_string;
 		}
 
-        $url = $this->api_url() . $path . $suffix;
+        $url = $this->api_host_and_port() . $path . $suffix;
         
         $curl = curl_init($url);
         if ($signed_data) {
