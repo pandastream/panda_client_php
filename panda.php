@@ -36,6 +36,10 @@ class Panda {
         return $this->http_request('DELETE', $request_path, $params);
     }
     
+    public function api_url() {
+        return $this->api_host . "/v{$this->api_version}";
+    }
+
     private function http_request($verb, $path, $query = null, $data = null) {
         $verb = strtoupper($verb);
 		$path = self::canonical_path($path);
@@ -50,7 +54,7 @@ class Panda {
 			$suffix = '?' . $signed_query_string;
 		}
 
-        $url = $this->api_host . "/v{$this->api_version}" . $path . $suffix;
+        $url = $this->api_url() . $path . $suffix;
         
         $curl = curl_init($url);
         if ($signed_data) {
