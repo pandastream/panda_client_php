@@ -85,11 +85,11 @@ class Panda {
         $auth_params['cloud_id'] = $this->cloud_id;
         $auth_params['access_key'] = $this->access_key;
         $auth_params['timestamp'] = date('c');
-        $auth_params['signature'] = self::generate_signature($verb, $request_path, $this->api_host, $this->secret_key, array_merge($params, $auth_params));
+        $auth_params['signature'] = $this->generate_signature($verb, $request_path, array_merge($params, $auth_params));
         return $auth_params;
     }
     
-    public static function generate_signature($verb, $request_path, $host, $secret_key, $params = array()) {
+    public static function signature_generator($verb, $request_path, $host, $secret_key, $params = array()) {
         $request_path = self::canonical_path($request_path);
         $query_string = self::canonical_querystring($params);
         $_verb = strtoupper($verb);
@@ -103,10 +103,10 @@ END;
         $context = hash_init('sha256', HASH_HMAC, $secret_key);
         hash_update($context, $string_to_sign);
         return base64_encode(hash_final($context, true));
-    }    
+    }
     
     public function generate_signature($verb, $request_path, $params = array()) {
-        return self::generate_signature($verb, $request_path, $this->api_host, $this->secret_key, $params);
+        return self::signature_generator($verb, $request_path, $this->api_host, $this->secret_key, $params);
     }
     
     //
