@@ -51,10 +51,10 @@ class Panda {
 		$signed_data = null;
 				
 		if ($verb == 'POST' || $verb == 'PUT') {
-            $signed_data = self::array2query($this->signed_params($verb, $path, $data));
+            $signed_data = $this->signed_query($verb, $path, $data);
         }
 		else {
-            $signed_query_string = self::array2query($this->signed_params($verb, $path, $query));
+            $signed_query_string = $this->signed_query($verb, $path, $query);
 			$suffix = '?' . $signed_query_string;
 		}
 
@@ -79,6 +79,10 @@ class Panda {
     //
     // Authentication
     //
+
+    public function signed_query($verb, $request_path, $params) {
+        return self::array2query($this->signed_params($verb, $request_path, $params));
+    }
     
     public function signed_params($verb, $request_path, $params) {
         $auth_params = $params;
