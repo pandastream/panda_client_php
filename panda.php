@@ -46,17 +46,17 @@ class Panda {
 
     private function http_request($verb, $path, $query = null, $data = null) {
         $verb = strtoupper($verb);
-		$path = self::canonical_path($path);
-		$suffix = '';
-		$signed_data = null;
-				
-		if ($verb == 'POST' || $verb == 'PUT') {
+        $path = self::canonical_path($path);
+        $suffix = '';
+        $signed_data = null;
+
+        if ($verb == 'POST' || $verb == 'PUT') {
             $signed_data = $this->signed_query($verb, $path, $data);
         }
-		else {
+        else {
             $signed_query_string = $this->signed_query($verb, $path, $query);
-			$suffix = '?' . $signed_query_string;
-		}
+            $suffix = '?' . $signed_query_string;
+        }
 
         $url = $this->api_host_and_port() . $path . $suffix;
         
@@ -117,11 +117,11 @@ END;
     // Misc
     //
 
-	private static function canonical_path($path) {
+    private static function canonical_path($path) {
         return '/' . trim($path, " \t\n\r\0\x0B/");
     }
     
-	private static function canonical_querystring($params = array()) {
+    private static function canonical_querystring($params = array()) {
         ksort($params, SORT_STRING);
         return self::array2query($params);
     }
