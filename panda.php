@@ -128,15 +128,15 @@ END;
 
     private static function urlencode($str) {
         $ret = urlencode($str);
-        $ret = str_replace($ret, "%7E", "~");
-        $ret = str_replace($ret, "+", "%20");
+        $ret = str_replace("%7E", "~", $ret);
+        $ret = str_replace("+", "%20", $ret);
         return $ret;
     }
     
     private static function array2query($array) {
         $pairs = array();
         foreach ($array as $key => $value) {
-            $pairs[] = urlencode($key) . '=' . urlencode($value);
+            $pairs[] = self::urlencode($key) . '=' . self::urlencode($value);
         }
         return join('&', $pairs);
     }
