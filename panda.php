@@ -7,7 +7,7 @@ class Panda {
             'access_key' => null,
             'secret_key' => null,
             'api_host' => 'api.pandastream.com',
-            'api_port' => 80
+            'api_port' => 80,
         );
         foreach ($known_options as $option => $default) {
             $this->$option = isset($args[$option]) ? $args[$option] : $default;
