@@ -37,11 +37,19 @@ class Panda {
     }
 
     public function api_url() {
-        return 'http://' . $this->api_host_and_port();
+        return 'http://' . $this->api_host_and_port() . $this->api_base_path();
     }
     
     public function api_host_and_port() {
-        return $this->api_host . "/v{$this->api_version}";
+        $ret = $this->api_host;
+        if ($this->api_port != 80) {
+            $ret .= ":{$this->api_port}";
+        }
+        return $ret;
+    }
+    
+    public function api_base_path() {
+        return "/v{$this->api_version}";
     }
 
     private function http_request($verb, $path, $query = null, $data = null) {
