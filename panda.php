@@ -66,7 +66,7 @@ class Panda {
             $suffix = '?' . $signed_query_string;
         }
 
-        $url = $this->api_host_and_port() . $path . $suffix;
+        $url = $this->api_url() . $path . $suffix;
         
         $curl = curl_init($url);
         if ($signed_data) {
