@@ -119,12 +119,7 @@ class Panda {
         $query_string = self::canonical_querystring($params);
         $_verb = strtoupper($verb);
         $_host = strtolower($host);
-        $string_to_sign =<<<END
-$_verb
-$_host
-$request_path
-$query_string
-END;
+        $string_to_sign = "$_verb\n$_host\n$request_path\n$query_string";
         return $string_to_sign;
     }
     
