@@ -78,3 +78,40 @@ EOF;
         $this->assertEqual($expected, $actual);
     }
 }
+
+class UnderlyingCrypto extends UnitTestCase {
+    private function generate_context() {
+        $context = hash_init('sha256', HASH_HMAC, 'secret');
+        hash_update($context, 'May I be authenticated');
+        return $context;
+    }
+    
+    private function read_data($filename) {
+        $path = dirname(__FILE__) . '/fixtures/' . $filename;
+        $handle = fopen($path, 'rb');
+        $ret = fread($handle, filesize($path));
+        fclose($handle);
+        return $ret;
+    }
+
+    function test_sha256_bin() {
+        $context = $this->generate_context();
+        $actual = hash_final($context, true);
+        $expected = $this->read_data('sha256.bin');
+        $this->assertEqual($expected, $actual);
+    }
+
+    function test_sha256_hex() {
+        $context = $this->generate_context();
+        $hex_actual = hash_final($context, false);
+        $this->assertEqual('4644d7eeb59727c44e1104f5301458062188f871de14a4d714498d9a99c6d433', $hex_actual);
+    }
+
+    function test_base64_bin() {
+        $this->assertEqual('RkTX7rWXJ8ROEQT1MBRYBiGI+HHeFKTXFEmNmpnG1DM=', base64_encode($this->read_data('sha256.bin')));
+    }
+    
+    function test_base64_ascii() {
+        $this->assertEqual('YWJjZGVmZ2hpams=', base64_encode('abcdefghijk'));
+    }
+}
