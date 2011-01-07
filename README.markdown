@@ -18,6 +18,7 @@ Copy the `panda.php` file to your application and `require()` it. The `Panda` cl
       'cloud_id' => 'your-panda-cloud-id',
       'access_key' => 'your-access-key',
       'secret_key' => 'your-secret-key',
+      // 'api_port' => 443, // enables https
     ));
 
 Now you can use this instance to interact with your Panda cloud.
