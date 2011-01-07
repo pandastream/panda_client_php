@@ -36,8 +36,16 @@ class Panda {
         return $this->http_request('DELETE', $request_path, $params);
     }
 
+    public function api_protocol() {
+        if ($this->api_port == 443) {
+            return 'https';
+        }else{
+            return 'http';
+        }
+    }
+
     public function api_url() {
-        return 'http://' . $this->api_host_and_port() . $this->api_base_path();
+        return $this->api_protocol() . '://' . $this->api_host_and_port() . $this->api_base_path();
     }
     
     public function api_host_and_port() {
