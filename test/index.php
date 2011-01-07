@@ -14,7 +14,7 @@ class UrlsTest extends UnitTestCase {
     }
 
     function test_api_url() {
-        $this->assertEqual($this->p->api_url(), 'http://api.pandastream.com/v2');
+        $this->assertEqual($this->p->api_url(), 'https://api.pandastream.com:443/v2');
     }
     
     function test_https() {
@@ -29,7 +29,7 @@ class UrlsTest extends UnitTestCase {
     }
 
     function test_api_host_and_port() {
-        $this->assertEqual($this->p->api_host_and_port(), 'api.pandastream.com');
+        $this->assertEqual($this->p->api_host_and_port(), 'api.pandastream.com:443');
         $p2 = new Panda(array(
             'api_host'   => 'api.pandastream.com',
             'api_port'   => '8080',
