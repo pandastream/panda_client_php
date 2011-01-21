@@ -1,7 +1,7 @@
 Panda client, PHP
 =================
 
-This simple PHP library provides a low-level interface to the REST API of [Panda](http://beta.pandastream.com), the online video encoding service.
+This simple PHP library provides a low-level interface to the REST API of [Panda](http://pandastream.com), the online video encoding service.
 
 You may also download the complete [example PHP application](http://github.com/newbamboo/panda_example_php) that we have made available.
 
