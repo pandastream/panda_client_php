@@ -107,6 +107,7 @@ class Panda {
     }
     
     public function signed_params($verb, $request_path, $params = array(), $timestamp = null) {
+        date_default_timezone_set('UTC');
 
         $auth_params = $params;
         unset($auth_params["file"]);
@@ -129,7 +130,7 @@ class Panda {
         return self::signature_generator($verb, $request_path, $this->api_host, $this->secret_key, $params);
     }
     
-    public function string_to_sign($verb, $request_path, $host, $params = array()) {
+    public static function string_to_sign($verb, $request_path, $host, $params = array()) {
         $request_path = self::canonical_path($request_path);
         $query_string = self::canonical_querystring($params);
         $_verb = strtoupper($verb);
