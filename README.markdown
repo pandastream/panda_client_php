@@ -14,7 +14,7 @@ This library requires **PHP 5.1.2** or later
 Copy the `panda.php` file to your application and `require()` it. The `Panda` class implements the client, just pass your details to the constructor:
 
     $panda = new Panda(array(
-      'api_host' => 'api.pandastream.com', // Use api.eu.pandastream.com if your account is in the EU
+      'api_host' => 'api.pandastream.com', // Use api-eu.pandastream.com if your account is in the EU
       'cloud_id' => 'your-panda-cloud-id',
       'access_key' => 'your-access-key',
       'secret_key' => 'your-secret-key',
