@@ -167,5 +167,3 @@ class Panda {
         return join('&', $pairs);
     }
 }
-
-?>
