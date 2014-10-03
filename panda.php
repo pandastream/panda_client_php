@@ -93,7 +93,17 @@ class Panda {
         // curl_setopt($curl, CURLOPT_VERBOSE, 1);
 
         $response = curl_exec($curl);
+        $error_code = curl_errno($curl);
+        $error_message = curl_error($curl);
         curl_close($curl);
+
+        if ( $error_code != CURLE_OK ) {
+            return json_encode(array(
+                'error' => 'CURL_' . $error_code,
+                'message' => $error_message,
+            ));
+        }
+
         return $response;
     }
 
