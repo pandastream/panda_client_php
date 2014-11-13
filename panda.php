@@ -86,7 +86,7 @@ class Panda {
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $verb);
         curl_setopt($curl, CURLOPT_PORT, $this->api_port);
         if (defined('CURLOPT_PROTOCOLS')) {
-            curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTP);
+            curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS|CURLPROTO_HTTP);
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
